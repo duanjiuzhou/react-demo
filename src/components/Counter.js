@@ -1,5 +1,23 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+
+/**
+* propTypes检查
+*/
+const propTypes = {
+    initValue:PropTypes.number,
+    caption:PropTypes.string.isRequired,
+    buttonStyle:PropTypes.object,
+    onUpdate:PropTypes.func
+};
+/**
+ * 设置默认prop值
+ */
+ const defaultProps = {
+    initValue: 0,
+    onUpdate: f =>f // 默认是一个什么都不做的函数
+ };
+    
 class Counter extends Component {
     constructor (props){
         super(props);
@@ -9,27 +27,31 @@ class Counter extends Component {
             count: props.initValue
         };
     }
-    /**
-     * propTypes检查
-     */
-    static propTypes = {
-        initValue:PropTypes.number,
-        caption:PropTypes.string.isRequired,
-        buttonStyle:PropTypes.object
-    };
-    
+
     /**
      * 点击 加
      */
     onClickIncrementButton(){
-        this.setState({count: this.state.count + 1});
+        this.updateCount(true);
     };
 
     /**
      * 点击 减
      */
     onClickEdcrementButton(){
-        this.setState({count: this.state.count - 1});
+        this.updateCount(false);
+    }
+
+    /**
+     * 是否进行加减，更新数据
+     * @param {boolean} isIncrement 
+     */
+    updateCount(isIncrement){
+        const previousValue = this.state.count;
+        const newValue = isIncrement ? previousValue + 1 : previousValue - 1;
+        this.setState({count: newValue});
+        // 子传父 数据 运用函数传递数据
+        this.props.onUpdate(newValue,previousValue);
     }
 
     render() {
@@ -43,11 +65,8 @@ class Counter extends Component {
         );
     }
 }
-/**
- * 设置默认prop值
- */
-Counter.defaultProps = {
-    initValue: 0
-}
+
+Counter.defaultProps = defaultProps;
+Counter.propTypes = propTypes;
 
 export default Counter;
