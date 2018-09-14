@@ -2,7 +2,7 @@
 
 该案例是为了了解并熟悉react的基本使用，对组件的用法、生命周期、prop、state、Redux、Router一些基本运用所写的demo。
 
-### React 组件生命周期
+### 1、React 组件生命周期
 
 > 组件的生命周期可分成三个状态：
 
@@ -25,3 +25,60 @@
 * componentDidUpdate 在组件完成更新后立即调用。在初始化时不会被调用。
 
 * componentWillUnmount在组件从 DOM 中移除之前立刻被调用。
+
+### 2、子父组件参数
+
+父子组件互相通过props传递数据。
+
+> 父组件传递数据到子组件
+
+~~~
+import React, {Component} from 'react';
+
+export default class Parent extends Component{
+    render() {
+        return(
+            <Child name={'issue'} age='1'/>
+        )
+    }
+}
+
+export default class Child extends Component {
+    constructor(props){
+        super(props);
+        console.log(this.props.name, this.props.age)
+        //会获得对应的数据.('issue', '1')
+    }
+}
+~~~
+
+> 子组件传递数据到父组件
+
+~~~
+import React, {Component} from 'react';
+
+export default class Parent extends Component{
+    render() {
+        return(
+            <Child name={this.name} />
+        )
+    }
+
+    name = (value) => {
+        console.log("receive name value is", value)
+    }
+}
+
+export default class Child extends Component {
+    render(){
+        return(
+            <input onChange={this.handleChange} />
+        )
+    }
+
+    handleChange = (e) => {
+        let value = e.target.value
+        this.props.name(value)
+    }
+}
+~~~
