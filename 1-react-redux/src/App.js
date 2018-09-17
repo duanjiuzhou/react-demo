@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import ClickCounter from './components/ClickCounter';
 import ContorlPanel from './components/ContorlPanel';
+import ReduxContorlPanel from './Redux/views/ControlPanel';
 import './App.css';
 
 class App extends Component {
@@ -67,10 +68,13 @@ class App extends Component {
         <ClickCounter />
         <div>
           <h2>React组件的数据 -- prop是组件的对外接口，state是组件的内部状态</h2>
+          <p><i>注： 组件不应该改变prop的值，而state存在的目的就是让组件来改变的</i></p>
           <ContorlPanel></ContorlPanel>
 
-          <p><i>注： 组件不应该改变prop的值，而state存在的目的就是让组件来改变的</i></p>
+          <h2>Redux运用示例</h2>
+          <ReduxContorlPanel></ReduxContorlPanel>
         </div>
+        
       </div>
     );
   }
