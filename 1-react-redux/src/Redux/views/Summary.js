@@ -56,7 +56,6 @@ class SummaryContainer extends Component {
     };
 
     render() {
-        console.log(this.props.children)
         return (
             <Summary sum={this.state.sum}></Summary>
           );
