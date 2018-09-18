@@ -119,6 +119,55 @@ Redux的reducer只负责计算状态，却并不负责存储状态。
 实际上，让傻瓜组件无状态，使我们拆分的主要目的之一，傻瓜组件只需要根据props来渲染结果，不需要state。
 状态全部交给容器组件处理，通过props将状态传递给傻瓜组件。
 
+#### 3.4 React-Redux中的connect函数
+
+> 该函数做的工作为：
+
+* 把Store上的状态转化为内层傻瓜组件的prop；
+* 把内层傻瓜组件中的用户动作转化为派送给Store的动作
+
+> 运用案例：
+
+~~~
+import {connect} from 'react-redux';
+
+......
+
+function mapStateToProps(state, ownProps) {
+  return {
+    value: state[ownProps.caption]
+  }
+}
+
+function mapDispatchToProps(dispatch, ownProps) {
+  return {
+    onIncrement: () => {
+      dispatch(Actions.increment(ownProps.caption));
+    },
+    onDecrement: () => {
+      dispatch(Actions.decrement(ownProps.caption));
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Counter);
+~~~
+> 注：
+
+* mapStateToProps函数：
+
+把Store上的状态转化为内层傻瓜组件的prop；
+mapStateToProps函数参数为 `state, ownProps`，state是store对象实例，ownProps是直接传递给外层容器组件的props。
+
+* mapDispatchToProps函数：
+
+把内层傻瓜组件中的用户动作转化为派送给Store的动作，就是把内层傻瓜组件暴露出来的函数类型prop关联上dispatch函数的调用。
+mapStateToProps函数参数为 `dispatch, ownProps`，dispatch是派发action的函数，ownProps是直接传递给外层容器组件的props。
+
+* Counter：
+
+傻瓜组件实例。
+
 
 
 

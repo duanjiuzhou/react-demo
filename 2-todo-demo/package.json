@@ -4,7 +4,9 @@
   "private": true,
   "dependencies": {
     "react": "^16.5.0",
+    "react-addons-perf": "^15.4.2",
     "react-dom": "^16.5.0",
+    "react-redux": "^5.0.7",
     "react-scripts": "1.1.5",
     "redux": "^4.0.0"
   },
@@ -15,6 +17,7 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "prop-types": "^15.6.2"
+    "prop-types": "^15.6.2",
+    "redux-immutable-state-invariant": "^2.1.0"
   }
 }
