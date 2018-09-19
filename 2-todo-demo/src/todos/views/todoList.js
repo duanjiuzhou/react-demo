@@ -6,11 +6,10 @@ import {FilterTypes} from '../../constants';
 import { connect } from 'react-redux';
 
 const TodoList = ({todos, onToggleTodo, onRemoveTodo}) => {
-    console.log(todos)
     return (
         <ul className='todo-list'>
         {
-            todos.map((item) => {
+            todos.map((item) => (
                 <TodoItem
                 key={item.id}
                 text={item.text}
@@ -18,7 +17,7 @@ const TodoList = ({todos, onToggleTodo, onRemoveTodo}) => {
                 onToggle={() => onToggleTodo(item.id)}
                 onRemove={() => onRemoveTodo(item.id)}
                 ></TodoItem>
-            })
+            ))
         }
         </ul>
     );
@@ -29,7 +28,6 @@ TodoList.propTypes = {
 };
 
 const selectVisibleTodos = (todos, filter) => {
-    
     switch (filter) {
         case FilterTypes.ALL:
             return todos;
@@ -42,8 +40,7 @@ const selectVisibleTodos = (todos, filter) => {
     }
 }
 
-const mapStateToProps = (state) => {
-   
+const mapStateToProps = (state, ownProps) => {
     return {
         todos: selectVisibleTodos(state.todos, state.filter)
     };
