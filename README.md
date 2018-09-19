@@ -169,5 +169,31 @@ mapStateToProps函数参数为 `dispatch, ownProps`，dispatch是派发action的
 傻瓜组件实例。
 
 
+#### 3.5 组件性能优化
 
+组件渲染时，父组件在重复渲染时，会引发所有的子组件的更新过程，即使传递给子组件的prop没有任何变化。
 
+看起来要做的就是给子组件增加`shouldComponentUpdate`函数，判断所需的props，进行新旧对比。没变化返回false, 变化返回true。
+
+例：
+~~~
+ shouldComponentUpdate(nextProps, nextState) {
+     return (nextProps.comleted !== this.props.comleted) || (nextProps.text !== this.props.text)
+ }
+~~~
+
+但是这样给每个React组件都定制自己的`shouldComponentUpdate`函数。从写代码的角度来看是一件很麻烦的事，但是使用了`react-redux`库，一切都很简单。
+
+使用`react-redux`，一个典型是React组件代码最后一个语句代码是这样：
+~~~
+export default connect(mapStateToProps, mapDispatchToProps)(Counter);
+~~~
+
+connect的过程中实际产生了一个无名的React组件类，这个类定制了`shouldComponentUpdate`函数的实现。实际逻辑是对比这次传递的内层组件的props和上一次的props。判断props有无变化，决定组件的更新渲染。但只是“浅层比较”，对于prop的类型是复杂对象，只会看着两个prop是不是同一个对象的引用，如果不是，哪怕这两个对象中的内容完全一样，也会被认为是这两个不同的prop。
+
+所以使用`connect函数`后会自动调用`shouldComponentUpdate`函数，进行渲染判断。对于一个无状态的组件也可以使用`connect函数`来了利用`shouldComponentUpdate`函数；
+
+例：
+~~~
+exprot default connect()(组件名称)
+~~~

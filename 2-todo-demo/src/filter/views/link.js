@@ -25,7 +25,6 @@ Link.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => {
-    console.log(state,ownProps)
     return {
         active: state.filter === ownProps.filter
     };
