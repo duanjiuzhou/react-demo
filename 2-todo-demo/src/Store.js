@@ -6,7 +6,7 @@ import {reducer as filterReducer} from './filter';
 // import Perf from 'react-addons-perf';
 
 
-// const win = window;
+const win = window;
 // win.Perf = Perf;
 
 const reducer = combineReducers({
@@ -14,14 +14,14 @@ const reducer = combineReducers({
     filter: filterReducer
   });
 
-  // const middlewares = [];
+  const middlewares = [];
   // if (process.env.NODE_ENV !== 'production') {
   //   middlewares.push(require('redux-immutable-state-invariant')());
   // }
 
-  // const storeEnhancers = compose(
-  //   applyMiddleware(...middlewares),
-  //   (win && win.devToolsExtension) ? win.devToolsExtension() : (f) => f,
-  // );
+  const storeEnhancers = compose(
+    applyMiddleware(...middlewares),
+    (win && win.devToolsExtension) ? win.devToolsExtension() : (f) => f,
+  );
 
-  export default createStore(reducer, {});
+  export default createStore(reducer, {},storeEnhancers);
